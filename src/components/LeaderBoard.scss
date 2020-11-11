@@ -10,7 +10,7 @@ Body
 .submitflag {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 47%;
   transform: translate(-50%, -50%);
   width: 600px;
   // height: 308px;
@@ -22,6 +22,13 @@ Body
     font-size: 18px;
     color: #e1e1e1;
   }
+}
+
+.submitFlagMessage {
+  margin-top: 13%!important;
+  left: 30%;
+  width: 40%!important; 
+  // transform: translate(-50%, -50%);
 }
 
 /*--------------------
@@ -62,6 +69,7 @@ Leaderboard
 
       &::before {
         content: counter(leaderboard);
+        font-size: 13px;
         position: absolute;
         z-index: 2;
         top: 15px;

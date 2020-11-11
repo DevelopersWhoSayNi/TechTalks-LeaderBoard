@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-  Segment,
-  Grid,
-  Icon,
-  Search,
-  Header,
-  Divider,
-  Button,
-} from "semantic-ui-react";
+import { Segment, Grid, Icon, Header, Divider } from "semantic-ui-react";
 
 class Home extends Component {
   render() {

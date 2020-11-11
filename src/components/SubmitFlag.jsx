@@ -7,17 +7,55 @@ import {
   Icon,
   Message,
 } from "semantic-ui-react";
+import SubmitFlagAPI from "../api/SubmitFlag";
+
+const SuccessMessage = () => {
+  return (
+    <Message icon className="submitFlagMessage">
+      <Icon name="check circle outline" color="green" />
+      <Message.Content>
+        <Message.Header>Correct!</Message.Header>
+        You have been awarded 500 points!
+      </Message.Content>
+    </Message>
+  );
+};
+
+const FailMessage = () => {
+  return (
+    <Message icon className="submitFlagMessage">
+      <Icon name="close" color="red" />
+      <Message.Content>
+        <Message.Header>Wrong.</Message.Header>
+        Flag is incorrect
+      </Message.Content>
+    </Message>
+  );
+};
+
+const ReSubmitMessage = () => {
+  return (
+    <Message icon className="submitFlagMessage">
+      <Icon name="exclamation circle" color="yellow" />
+      <Message.Content>
+        <Message.Header>Update</Message.Header>
+        Points for this flag have been rewarded to you before
+      </Message.Content>
+    </Message>
+  );
+};
 
 class SubmitFlag extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: null,
-      exactId: null,
-      flag: null,
-      displayNameError: false,
-      exactIdError: false,
-      flagError: false,
+      submitMessage: "",
+      displayName: "",
+      exactId: "",
+      flag: "",
+      displayNameError: "",
+      exactIdError: "",
+      flagError: "",
     };
   }
 
@@ -40,24 +78,47 @@ class SubmitFlag extends Component {
       this.setState({ flagError: true });
     }
 
-    if (this.state.displayName && this.state.displayName && this.state.flag) {
-      console.log(this.state.displayName);
-      console.log(this.state.exactId);
-      console.log(this.state.flag);
-      this.setState({ flag: null });
+    if (this.state.displayName && this.state.exactId && this.state.flag) {
+      var body = {
+        Name: this.state.displayName,
+        UserID: this.state.exactId,
+        Flag: this.state.flag,
+      };
+
+      SubmitFlagAPI(body)
+        .then((res) => {
+          this.showMessage(res);
+        })
+        .catch((error) => {
+          console.log({ error });
+        });
+    }
+  }
+
+  showMessage(res) {
+    switch (res) {
+      case "Correct":
+        this.setState({
+          submitMessage: <SuccessMessage />,
+        });
+        break;
+      case "Points for this flag is rewarded before":
+        this.setState({
+          submitMessage: <ReSubmitMessage />,
+        });
+        break;
+      default:
+        // "Wrong"
+        this.setState({
+          submitMessage: <FailMessage />,
+        });
     }
   }
 
   render() {
     return (
       <div>
-        <Message icon>
-          <Icon name="check circle outline" color="green" />
-          <Message.Content>
-            <Message.Header>Correct!</Message.Header>
-            You have been awarded 500 points!
-          </Message.Content>
-        </Message>
+        <div>{this.state.submitMessage}</div>
         <div className="submitflag">
           <h1 style={{ paddingLeft: "5%", paddingTop: "2%" }}>
             Submit your flag
@@ -69,7 +130,9 @@ class SubmitFlag extends Component {
                 <Label basic color="red">
                   Field is mandatory
                 </Label>
-              ) : null}
+              ) : (
+                ""
+              )}
               <Input
                 fluid
                 name="displayName"
@@ -82,7 +145,9 @@ class SubmitFlag extends Component {
                 <Label basic color="red">
                   Field is mandatory
                 </Label>
-              ) : null}
+              ) : (
+                ""
+              )}
               <Input
                 name="exactId"
                 onChange={(e) => this.onChange(e)}
@@ -97,7 +162,9 @@ class SubmitFlag extends Component {
                 <Label basic color="red">
                   Field is mandatory
                 </Label>
-              ) : null}
+              ) : (
+                ""
+              )}
               <Input
                 style={{ height: "60px" }}
                 fluid

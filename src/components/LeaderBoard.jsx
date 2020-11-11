@@ -2,104 +2,48 @@ import React, { Component } from "react";
 import "./LeaderBoard.scss";
 import Trophy from "../resources/trophy.png";
 import { Image, Header, Icon } from "semantic-ui-react";
-
-const list = [
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-  { name: "Zeus", score: "10000" },
-  { name: "Poseidon", score: "9000" },
-  { name: "Dionysus", score: "8600" },
-  { name: "Athena", score: "8000" },
-  { name: "Hephaestus", score: "7700" },
-];
+import GetLeaderboard from "../api/GetLeaderboard";
 
 const RenderHackers = (hackersList) => {
   return hackersList.map((hacker, i) => {
     return (
       <li key={i}>
-        <mark>{hacker.name}</mark>
-        <small>{hacker.score}</small>
+        <mark>
+          {hacker.Name}{" "}
+          <div style={{ color: "floralwhite", fontSize: "x-small" }}>
+            ( {hacker.UserID} )
+          </div>
+        </mark>
+        <small>{hacker.Score}</small>
       </li>
     );
   });
 };
 
 class LeaderBoard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      List: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getHackersList();
+  }
+
+  getHackersList() {
+    this.setState({ List: [] });
+    GetLeaderboard()
+      .then((res) => {
+        this.setState({ List: res });
+      })
+      .catch((error) => {
+        console.log("Failed");
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div className="leaderboard" style={{ padding: "2%" }}>
@@ -110,7 +54,7 @@ class LeaderBoard extends Component {
             paddingRight: "40px",
             cursor: "pointer",
           }}
-          onClick={(e) => console.log("this")}
+          onClick={(e) => this.getHackersList()}
         >
           <Icon name="refresh" color="blue" size="large" />
         </div>
@@ -119,7 +63,7 @@ class LeaderBoard extends Component {
           Hackers Leader Board
         </Header>
 
-        <ol>{RenderHackers(list)}</ol>
+        <ol>{RenderHackers(this.state.List)}</ol>
       </div>
     );
   }
