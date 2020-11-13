@@ -80,9 +80,9 @@ class SubmitFlag extends Component {
 
     if (this.state.displayName && this.state.exactId && this.state.flag) {
       var body = {
-        Name: this.state.displayName,
-        UserID: this.state.exactId,
-        Flag: this.state.flag,
+        Name: this.state.displayName.trim(),
+        UserID: this.state.exactId.trim(),
+        Flag: this.state.flag.trim(),
       };
 
       SubmitFlagAPI(body)
