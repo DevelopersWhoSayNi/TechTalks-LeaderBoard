@@ -2,7 +2,9 @@ import Axios from "axios";
 
 const sortList = (list) => {
   var sortedList = list.sort(
-    (a, b) => b.Score - a.Score || a.LastFlagUploadedAt - b.LastFlagUploadedAt
+    (a, b) =>
+      b.Score - a.Score ||
+      new Date(a.LastFlagUploadedAt) - new Date(b.LastFlagUploadedAt)
   );
   return sortedList;
 };
