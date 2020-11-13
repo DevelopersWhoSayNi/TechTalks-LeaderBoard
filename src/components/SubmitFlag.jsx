@@ -119,8 +119,8 @@ class SubmitFlag extends Component {
   render() {
     return (
       <div>
-        <SideMenuBar activeItem="submitflag" />
         <div>{this.state.submitMessage}</div>
+        <SideMenuBar activeItem="submitflag" />
         <div className="submitflag">
           <h1 style={{ paddingLeft: "5%", paddingTop: "2%" }}>
             Submit your flag
