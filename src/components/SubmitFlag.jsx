@@ -8,6 +8,7 @@ import {
   Message,
 } from "semantic-ui-react";
 import SubmitFlagAPI from "../api/SubmitFlag";
+import SideMenuBar from "./SideMenuBar";
 
 const SuccessMessage = (props) => {
   return (
@@ -24,7 +25,7 @@ const SuccessMessage = (props) => {
 const FailMessage = () => {
   return (
     <Message icon className="submitFlagMessage">
-      <Icon name="close" color="red" />
+      <Icon name="exclamation circle" color="red" />
       <Message.Content>
         <Message.Header>Wrong.</Message.Header>
         Flag is incorrect
@@ -80,9 +81,9 @@ class SubmitFlag extends Component {
 
     if (this.state.displayName && this.state.exactId && this.state.flag) {
       var body = {
-        Name: this.state.displayName,
-        UserID: this.state.exactId,
-        Flag: this.state.flag,
+        Name: this.state.displayName.trim(),
+        UserID: this.state.exactId.trim(),
+        Flag: this.state.flag.trim(),
       };
 
       SubmitFlagAPI(body)
@@ -118,6 +119,7 @@ class SubmitFlag extends Component {
   render() {
     return (
       <div>
+        <SideMenuBar activeItem="submitflag" />
         <div>{this.state.submitMessage}</div>
         <div className="submitflag">
           <h1 style={{ paddingLeft: "5%", paddingTop: "2%" }}>
