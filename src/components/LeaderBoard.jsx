@@ -3,6 +3,7 @@ import "./LeaderBoard.scss";
 import Trophy from "../resources/trophy.png";
 import { Image, Header, Icon } from "semantic-ui-react";
 import GetLeaderboard from "../api/GetLeaderboard";
+import SideMenuBar from "./SideMenuBar";
 
 const RenderHackers = (hackersList) => {
   return hackersList.map((hacker, i) => {
@@ -46,24 +47,27 @@ class LeaderBoard extends Component {
 
   render() {
     return (
-      <div className="leaderboard" style={{ padding: "2%" }}>
-        <div
-          style={{
-            float: "right",
-            paddingTop: "30px",
-            paddingRight: "40px",
-            cursor: "pointer",
-          }}
-          onClick={(e) => this.getHackersList()}
-        >
-          <Icon name="refresh" color="blue" size="large" />
-        </div>
-        <Header color="yellow" style={{ paddingLeft: "8%" }}>
-          <Image src={Trophy} style={{ width: "40px" }} />
-          Hackers Leader Board
-        </Header>
+      <div>
+        <SideMenuBar activeItem="leaderboard" />
+        <div className="leaderboard" style={{ padding: "2%" }}>
+          <div
+            style={{
+              float: "right",
+              paddingTop: "30px",
+              paddingRight: "40px",
+              cursor: "pointer",
+            }}
+            onClick={(e) => this.getHackersList()}
+          >
+            <Icon name="refresh" color="blue" size="large" />
+          </div>
+          <Header color="yellow" style={{ paddingLeft: "8%" }}>
+            <Image src={Trophy} style={{ width: "40px" }} />
+            Hackers Leader Board
+          </Header>
 
-        <ol>{RenderHackers(this.state.List)}</ol>
+          <ol>{RenderHackers(this.state.List)}</ol>
+        </div>
       </div>
     );
   }
