@@ -9,13 +9,13 @@ import {
 } from "semantic-ui-react";
 import SubmitFlagAPI from "../api/SubmitFlag";
 
-const SuccessMessage = () => {
+const SuccessMessage = (props) => {
   return (
     <Message icon className="submitFlagMessage">
       <Icon name="check circle outline" color="green" />
       <Message.Content>
         <Message.Header>Correct!</Message.Header>
-        You have been awarded 500 points!
+        You have been awarded {props.pointsAwarded} points!
       </Message.Content>
     </Message>
   );
@@ -96,10 +96,10 @@ class SubmitFlag extends Component {
   }
 
   showMessage(res) {
-    switch (res) {
+    switch (res.message) {
       case "Correct":
         this.setState({
-          submitMessage: <SuccessMessage />,
+          submitMessage: <SuccessMessage pointsAwarded={res.points_awarded} />,
         });
         break;
       case "Points for this flag is rewarded before":

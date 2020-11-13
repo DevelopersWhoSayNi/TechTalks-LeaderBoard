@@ -7,7 +7,7 @@ const SubmitFlag = (body) => {
   return Axios.post(url, body)
     .then((response) => {
       if (response.data) {
-        return response.data.body.result;
+        return response.data;
       }
     })
     .catch((error) => {
