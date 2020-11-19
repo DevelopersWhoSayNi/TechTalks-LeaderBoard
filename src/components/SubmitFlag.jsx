@@ -97,22 +97,43 @@ class SubmitFlag extends Component {
   }
 
   showMessage(res) {
+    this.setState({
+      submitMessage: null,
+    });
+
     switch (res.message) {
       case "Correct":
-        this.setState({
-          submitMessage: <SuccessMessage pointsAwarded={res.points_awarded} />,
-        });
+        setTimeout(
+          function () {
+            this.setState({
+              submitMessage: (
+                <SuccessMessage pointsAwarded={res.points_awarded} />
+              ),
+            });
+          }.bind(this),
+          350
+        );
         break;
       case "Points for this flag is rewarded before":
-        this.setState({
-          submitMessage: <ReSubmitMessage />,
-        });
+        setTimeout(
+          function () {
+            this.setState({
+              submitMessage: <ReSubmitMessage />,
+            });
+          }.bind(this),
+          350
+        );
         break;
       default:
         // "Wrong"
-        this.setState({
-          submitMessage: <FailMessage />,
-        });
+        setTimeout(
+          function () {
+            this.setState({
+              submitMessage: <FailMessage />,
+            });
+          }.bind(this),
+          350
+        );
     }
   }
 
