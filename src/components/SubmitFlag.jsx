@@ -47,8 +47,14 @@ const ReSubmitMessage = () => {
 };
 
 class SubmitFlag extends Component {
+
+  userData;
+
   constructor(props) {
     super(props);
+
+    this.onChange = this.onChange.bind(this);
+
     this.state = {
       submitMessage: "",
       displayName: "",
@@ -58,6 +64,7 @@ class SubmitFlag extends Component {
       exactIdError: "",
       flagError: "",
     };
+
   }
 
   onChange = (e) =>
@@ -67,6 +74,28 @@ class SubmitFlag extends Component {
       exactIdError: false,
       flagError: false,
     });
+
+  componentDidMount() {
+    this.userData = JSON.parse(localStorage.getItem('hacker'));
+
+    if (localStorage.getItem('hacker')) {
+        this.setState({
+          displayName: this.userData.displayName,
+          exactId: this.userData.exactId
+        })
+    } else {
+        this.setState({
+          displayName: '',
+          exactId: ''
+        })
+    }
+  }
+
+  componentDidUpdate(nextProps, nextState) {
+
+    localStorage.setItem('hacker', JSON.stringify(nextState));
+
+  }
 
   submitFlag() {
     if (!this.state.displayName) {
@@ -159,8 +188,10 @@ class SubmitFlag extends Component {
               <Input
                 fluid
                 name="displayName"
+                value = {this.state.displayName}
                 onChange={(e) => this.onChange(e)}
                 placeholder="Display Name"
+                maxLength="15"
               />
             </Segment>
             <Segment style={{ background: "inherit" }}>
@@ -173,11 +204,13 @@ class SubmitFlag extends Component {
               )}
               <Input
                 name="exactId"
+                value = {this.state.exactId}
                 onChange={(e) => this.onChange(e)}
                 style={{ display: "flex" }}
                 label={{ basic: true, content: "@exactsoftware.com" }}
                 labelPosition="right"
-                placeholder="Enter your exact ID"
+                placeholder="Enter your company ID"
+                maxLength="15"
               />
             </Segment>
             <Segment style={{ background: "inherit" }}>
