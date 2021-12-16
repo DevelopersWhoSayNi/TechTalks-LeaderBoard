@@ -19,7 +19,7 @@ class SideMenuBar extends Component {
 
         <Menu.Item name="submitflag" active={activeItem === "submitflag"}>
           <Icon name="send" />
-          <Link to="submitflag">submitflag</Link>
+          <Link to="submitflag">Submit Flag</Link>
         </Menu.Item>
       </Menu>
     );
