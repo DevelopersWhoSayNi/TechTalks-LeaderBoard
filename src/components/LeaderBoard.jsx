@@ -12,7 +12,6 @@ const RenderHackers = (hackersList) => {
         <mark>
           {hacker.Name}{" "}
           <div style={{ color: "floralwhite", fontSize: "x-small" }}>
-            {/* ( {hacker.UserID} ) */}
           </div>
         </mark>
         <small>{hacker.Score}</small>
