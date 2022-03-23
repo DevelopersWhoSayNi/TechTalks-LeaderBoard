@@ -7,6 +7,24 @@ Body
   box-sizing: border-box;
 }
 
+// background image for techtalk 2021. Comment out for fall back
+body::before {
+  content: "";
+  position: fixed;
+  background: #040404 url("https://2021.exactctf.com/assets/img/4828882.jpg") top right no-repeat;
+  background-size: cover;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  z-index: -1;
+  display: block; // for firefox
+}
+
+.ui.icon.message {
+  z-index: 999 !important;
+}
+
 .submitflag {
   position: absolute;
   top: 50%;
@@ -199,6 +217,7 @@ Leaderboard
     }
 
   }
+
 }
 
 // * {

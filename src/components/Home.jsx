@@ -14,7 +14,7 @@ class Home extends Component {
               <Grid.Column>
                 <Header icon>
                   <Icon name="send" />
-                  <Link to="submitflag">submitflag</Link>
+                  <Link to="submitflag">Submit Flag</Link>
                 </Header>
               </Grid.Column>
 

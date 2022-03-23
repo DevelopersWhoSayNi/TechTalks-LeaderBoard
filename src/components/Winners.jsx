@@ -3,15 +3,17 @@ import "./LeaderBoard.scss";
 import Trophy from "../resources/trophy.png";
 import { Image, Header, Icon } from "semantic-ui-react";
 import GetLeaderboard from "../api/GetLeaderboard";
-import SideMenuBar from "./SideMenuBar";
+import Confetti from "react-confetti";
 
-const RenderHackers = (hackersList) => {
-  return hackersList.map((hacker, i) => {
+const RenderTopHackers = (hackersList) => {
+  // returns a list of top three hackers
+  return hackersList.slice(0, 3).map((hacker, i) => {
     return (
       <li key={i}>
         <mark>
           {hacker.Name}{" "}
           <div style={{ color: "floralwhite", fontSize: "x-small" }}>
+            ( {hacker.UserID} )
           </div>
         </mark>
         <small>{hacker.Score}</small>
@@ -20,7 +22,7 @@ const RenderHackers = (hackersList) => {
   });
 };
 
-class LeaderBoard extends Component {
+class Winners extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +49,7 @@ class LeaderBoard extends Component {
   render() {
     return (
       <div>
-        <SideMenuBar activeItem="leaderboard" />
+        <Confetti />
         <div className="leaderboard" style={{ padding: "2%" }}>
           <div
             style={{
@@ -62,14 +64,18 @@ class LeaderBoard extends Component {
           </div>
           <Header color="yellow" style={{ paddingLeft: "8%" }}>
             <Image src={Trophy} style={{ width: "40px" }} />
-            Hackers Leader Board
+            Top Hackers
           </Header>
 
-          <ol>{RenderHackers(this.state.List)}</ol>
+          <ol>{RenderTopHackers(this.state.List)}</ol>
+          <br />
+          <br />
         </div>
+        <br />
+        <br />
       </div>
     );
   }
 }
 
-export default LeaderBoard;
+export default Winners;
